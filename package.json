@@ -1,0 +1,48 @@
+{
+  "name": "BOMHanaApp1",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap-cloud-sdk/http-client": "^3.13.0",
+    "@sap-cloud-sdk/resilience": "^3.13.0",
+    "@sap/cds": "^7",
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
+    "@sap/ux-specification": "^1.120.7"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-project1": "cds watch --open project1/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "cds": {
+    "requires": {
+      "auth": "mocked",
+      "db": {
+        "kind": "hana",
+        "pool": {
+          "max": 100,
+          "min": 10
+        }
+      },
+      "ZBILLOFMATERIALV2_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZBILLOFMATERIALV2_SRV",
+        "credentials": {
+          "destination": "HQ2_990_FOR_TESTING",
+          "path": "/sap/opu/odata/sap/BILLOFMATERIALV2_SRV"
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app/project1"
+  ]
+}
