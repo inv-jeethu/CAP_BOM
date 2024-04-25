@@ -116,7 +116,7 @@
                       "createAtEnd": true,
                       "name": "Inline"
                     },
-                    "selectionMode": "None",
+                    "selectionMode": "Multi",
                     "type": "ResponsiveTable"
                   }
                 }

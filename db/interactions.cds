@@ -1,13 +1,13 @@
 namespace app.interactions;
 
-//using {Country} from '@sap/cds/common';
+
 using ZBILLOFMATERIALV2_SRV as BOM from '../srv/external/ZBILLOFMATERIALV2_SRV';
 
 
 entity BOMMain {
-  // key id                          : String(50);
-      key Plant                       : Association to BOM.I_PlantStdVH;
-      key Material                    : Association to BOM.C_BOMMaterialVH;
+  key requestId                   : UUID;
+      Plant                       : Association to BOM.I_PlantStdVH;
+      Material                    : Association to BOM.C_BOMMaterialVH;
       BillOfMaterialVariantUsage  : Association to BOM.I_BillOfMaterialUsageStdVH;
       // BillOfMaterialItemCategory : Association to BOM.I_BOMItemCategoryVH;
       UnitOfMeasureDimensionName  : Association to BOM.I_UnitOfMeasureStdVH;
@@ -15,21 +15,22 @@ entity BOMMain {
       BillOfMaterialVariant       : String(8);
       ValidFrom                   : Date;
       BOMHeaderQuantityInBaseUnit : String(10);
-      RequesterFirstName          : String(10);
-      RequesterLastName           : String(10);
-      RequesterEmail              : String(15);
+      RequesterFirstName          : String(15);
+      RequesterLastName           : String(15);
+      RequesterEmail              : String(255) @assert.format: 'email';
       RequesterComment            : String(250);
-      ApproverFirstName           : String(10);
-      ApproverLastName            : String(10);
-      ApproverEmail               : String(15);
+      ApproverFirstName           : String(15);
+      ApproverLastName            : String(15);
+      ApproverEmail               : String(255) @assert.format: 'email';
       ApproverComment             : String(250);
       BillOfMaterialItem          : Composition of many BillOfMaterialItemTP
-                                      on BillOfMaterialItem.BillOfMaterialItemNumber = $self;
+                                      on BillOfMaterialItem.BOMItem = $self;
 };
 
 entity BillOfMaterialItemTP {
-  //  key Component_id               : Association to BOMMain;
-       BillOfMaterialItemNumber   : Association to BOMMain;
+  key Component_id               : UUID;
+  key BOMItem                    : Association to BOMMain;
+      BillOfMaterialItemNumber   : String(20);
       BillOfMaterialComponent    : String(20);
       BillOfMaterialItemCategory : String(30);
       BillOfMaterialItemUnit     : String(10);

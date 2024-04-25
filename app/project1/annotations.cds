@@ -61,21 +61,45 @@ annotate service.BOMMain with @(
                         },],
                 },
                 {
+                    $Type : 'UI.CollectionFacet',
+                    Label : '{i18n>Approver}',
+                    ID : 'Approver1',
+                    Facets : [
+                        {
+                            $Type : 'UI.ReferenceFacet',
+                            Label : '{i18n>Approver}',
+                            ID : 'Approver2',
+                            Target : '@UI.FieldGroup#Approver',
+                        },],
+                },],
+        },
+        {
+            $Type : 'UI.CollectionFacet',
+            Label : '{i18n>HeaderAttributes}',
+            ID : 'HeaderAttributes',
+            Facets : [
+                {
                     $Type : 'UI.ReferenceFacet',
-                    Label : 'Approver',
-                    ID : 'Approver',
-                    Target : '@UI.FieldGroup#Approver',
+                    Label : '{i18n>GeneralDetails}',
+                    ID : 'GeneralDetails',
+                    Target : '@UI.FieldGroup#GeneralDetails',
+                },
+                {
+                    $Type : 'UI.ReferenceFacet',
+                    Label : '{i18n>QuantityDetails}',
+                    ID : 'i18nQuantityDetails',
+                    Target : '@UI.FieldGroup#i18nQuantityDetails',
+                },
+                {
+                    $Type : 'UI.ReferenceFacet',
+                    Label : '{i18n>Validity}',
+                    ID : 'i18nValidity',
+                    Target : '@UI.FieldGroup#i18nValidity',
                 },],
         },
         {
             $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target : '@UI.FieldGroup#GeneratedGroup1',
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            Label : 'Component',
+            Label : '{i18n>Component}',
             ID : 'Component',
             Target : 'BillOfMaterialItem/@UI.PresentationVariant#Component',
         },
@@ -119,9 +143,6 @@ annotate service.BOMMain with {
         },
         Common.ValueListWithFixedValues : false
 )};
-annotate service.BOMMain with {
-    Material @Common.Text : BillOfMaterialVersion
-};
 annotate service.BOMMain with @(
     UI.FieldGroup #Workflowsettings : {
         $Type : 'UI.FieldGroupType',
@@ -144,22 +165,22 @@ annotate service.BOMMain with @(
             {
                 $Type : 'UI.DataField',
                 Value : RequesterFirstName,
-                Label : 'RequesterFirstName',
+                Label : '{i18n>Requesterfirstname}',
             },
             {
                 $Type : 'UI.DataField',
                 Value : RequesterLastName,
-                Label : 'RequesterLastName',
+                Label : '{i18n>Requesterlastname}',
             },
             {
                 $Type : 'UI.DataField',
                 Value : RequesterEmail,
-                Label : 'RequesterEmail',
+                Label : '{i18n>Requesteremail}',
             },
             {
                 $Type : 'UI.DataField',
                 Value : RequesterComment,
-                Label : 'RequesterComment',
+                Label : '{i18n>Requestercomment}',
             },],
     }
 );
@@ -170,19 +191,19 @@ annotate service.BOMMain with @(
             {
                 $Type : 'UI.DataField',
                 Value : ApproverFirstName,
-                Label : 'ApproverFirstName',
+                Label : '{i18n>Approverfirstname}',
             },{
                 $Type : 'UI.DataField',
                 Value : ApproverLastName,
-                Label : 'ApproverLastName',
+                Label : '{i18n>Approverlastname}',
             },{
                 $Type : 'UI.DataField',
                 Value : ApproverEmail,
-                Label : 'ApproverEmail',
+                Label : '{i18n>Approveremail}',
             },{
                 $Type : 'UI.DataField',
                 Value : ApproverComment,
-                Label : 'ApproverComment',
+                Label : '{i18n>Approvercomment}',
             },],
     }
 );
@@ -226,23 +247,28 @@ annotate service.BillOfMaterialItemTP with @(
         {
             $Type : 'UI.DataField',
             Value : BillOfMaterialItemNumber,
-            Label : 'BillOfMaterialItemNumber',
+            Label : '{i18n>ItemNumber}',
         },{
             $Type : 'UI.DataField',
             Value : BillOfMaterialItemCategory,
-            Label : 'BillOfMaterialItemCategory',
+            Label : '{i18n>ItemCategory}',
         },{
             $Type : 'UI.DataField',
             Value : BillOfMaterialComponent,
-            Label : 'BillOfMaterialComponent',
+            Label : '{i18n>Component1}',
         },{
             $Type : 'UI.DataField',
             Value : BillOfMaterialItemQuantity,
-            Label : 'BillOfMaterialItemQuantity',
+            Label : '{i18n>ComponentQuantity}',
         },{
             $Type : 'UI.DataField',
             Value : BillOfMaterialItemUnit,
-            Label : 'BillOfMaterialItemUnit',
+            Label : '{i18n>ComponentUnit}',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : BOMItem.Material.MaterialDescription,
+            Label : '{i18n>ComponentDescription}',
         },]
 );
 annotate service.BillOfMaterialItemTP with @(
@@ -268,7 +294,10 @@ annotate service.BillOfMaterialItemTP with {
         Common.ValueListWithFixedValues : true
 )};
 annotate service.I_BOMItemCategoryVH with {
-    BillOfMaterialItemCategory @Common.Text : BillOfMaterialItemCategoryDesc
+    BillOfMaterialItemCategory @Common.Text : {
+            $value : BillOfMaterialItemCategoryDesc,
+            ![@UI.TextArrangement] : #TextLast,
+        }
 };
 annotate service.BillOfMaterialItemTP with {
     BillOfMaterialComponent @(Common.ValueList : {
@@ -303,7 +332,10 @@ annotate service.BillOfMaterialItemTP with {
         Common.ValueListWithFixedValues : true
 )};
 annotate service.I_UnitOfMeasureStdVH with {
-    UnitOfMeasure @Common.Text : UnitOfMeasureLongName
+    UnitOfMeasure @Common.Text : {
+            $value : UnitOfMeasureLongName,
+            ![@UI.TextArrangement] : #TextLast,
+        }
 };
 annotate service.BOMMain with @(
     UI.HeaderInfo : {
@@ -318,9 +350,92 @@ annotate service.BOMMain with @(
 annotate service.BOMMain with {
     BillOfMaterialVariantUsage @Common.Text : BillOfMaterialVariantUsage_BillOfMaterialVariantUsage
 };
-annotate service.BOMMain with {
-    Plant @Common.Text : {
-        $value : Plant_Plant,
-        ![@UI.TextArrangement] : #TextLast,
+annotate service.I_UnitOfMeasureStdVH with {
+    UnitOfMeasureLongName @Common.Text : {
+        $value : UnitOfMeasure,
+        ![@UI.TextArrangement] : #TextFirst,
     }
+};
+
+annotate service.BOMMain with @(
+    UI.FieldGroup #Approver1 : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : ApproverFirstName,
+                Label : '{i18n>Approverfirstname}',
+            },],
+    }
+);
+annotate service.BOMMain with @(
+    UI.FieldGroup #GeneralDetails : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : Material_Material,
+                Label : '{i18n>Material}',
+            },{
+                $Type : 'UI.DataField',
+                Value : Plant_Plant,
+                Label : '{i18n>Plant}',
+            },{
+                $Type : 'UI.DataField',
+                Value : BillOfMaterialVariantUsage_BillOfMaterialVariantUsage,
+                Label : '{i18n>BomUsage}',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : BillOfMaterialVariant,
+                Label : '{i18n>AlternativeBom}',
+            },{
+                $Type : 'UI.DataField',
+                Value : BillOfMaterialVersion,
+                Label : '{i18n>BomVersion}',
+            },],
+    }
+);
+annotate service.BOMMain with {
+    Material @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'C_BOMMaterialVH',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : Material_Material,
+                    ValueListProperty : 'Material',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'MaterialDescription',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : false
+)};
+annotate service.BOMMain with @(
+    UI.FieldGroup #i18nQuantityDetails : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : BOMHeaderQuantityInBaseUnit,
+                Label : '{i18n>BaseQuantity}',
+            },],
+    }
+);
+annotate service.BOMMain with @(
+    UI.FieldGroup #i18nValidity : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : ValidFrom,
+                Label : '{i18n>ValidFrom}',
+            },],
+    }
+);
+annotate service.C_BOMMaterialVH with {
+    MaterialDescription @Common.Text : Material
 };

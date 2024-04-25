@@ -22,7 +22,7 @@
               "apiEndpoint": "https://api.cf.jp10.hana.ondemand.com",
               "org": "Hirose Electric_test1",
               "space": "HRS_NEO",
-              "instance": "BOMhana1Service",
+              "instance": "BOMServiceInstance2",
               "key": "SharedDevKey",
               "resolved": false
             },
